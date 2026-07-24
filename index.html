@@ -350,8 +350,9 @@
           <textarea name="off_limits" placeholder="Let us know what to avoid — we roast habits, not people."></textarea>
         </div>
         <div class="submit-row">
-          <button type="submit" class="cta" style="border:none; cursor:pointer;">Submit Roast Order</button>
-          <p class="price-teaser">Roasts start at $4.99 · Emailed to you · No account needed</p>
+          <button type="submit" id="submitBtn" class="cta" style="border:none; cursor:pointer;">Submit & Pay $1.99 →</button>
+          <p class="price-teaser">Roasts start at $1.99 · Emailed to you · No account needed</p>
+          <p id="formStatus" class="mono" style="font-size:12px; margin-top:10px; display:none;"></p>
         </div>
       </form>
     </div>
@@ -394,6 +395,41 @@
   slider.addEventListener('input', e => render(e.target.value));
   pills.forEach((p, i) => p.addEventListener('click', () => { slider.value = i; render(i); }));
   render(slider.value);
+
+  // Submit order details to Formspree, then send customer to Stripe to pay
+  const STRIPE_PAYMENT_LINK = "https://buy.stripe.com/3cI9AV92Xf6TcR55EQeQM00";
+  const roastForm = document.getElementById('roastForm');
+  const submitBtn = document.getElementById('submitBtn');
+  const formStatus = document.getElementById('formStatus');
+
+  roastForm.addEventListener('submit', function(e){
+    e.preventDefault();
+    submitBtn.disabled = true;
+    submitBtn.textContent = "Submitting...";
+    formStatus.style.display = 'none';
+
+    const data = new FormData(roastForm);
+    fetch(roastForm.action, {
+      method: 'POST',
+      body: data,
+      headers: { 'Accept': 'application/json' }
+    }).then(response => {
+      if(response.ok){
+        formStatus.textContent = "Order received — redirecting you to payment...";
+        formStatus.style.color = '#5C6E4F';
+        formStatus.style.display = 'block';
+        setTimeout(() => { window.location.href = STRIPE_PAYMENT_LINK; }, 1200);
+      } else {
+        throw new Error('Submission failed');
+      }
+    }).catch(() => {
+      formStatus.textContent = "Something went wrong — please try again or email us directly.";
+      formStatus.style.color = '#D8341C';
+      formStatus.style.display = 'block';
+      submitBtn.disabled = false;
+      submitBtn.textContent = "Submit & Pay $1.99 →";
+    });
+  });
 </script>
 
 </body>
