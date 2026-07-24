@@ -302,54 +302,58 @@
     <span class="section-kicker">The Order Ticket</span>
     <h2 class="section-title">Fill It Out</h2>
     <div class="ticket">
-      <div class="field">
-        <label>Roast target's name</label>
-        <input type="text" placeholder="e.g. Dave from accounting">
-      </div>
-      <div class="row2">
+      <form id="roastForm" action="https://formspree.io/f/mjgnpvgz" method="POST">
+        <input type="hidden" name="_subject" value="New Roast Mail Order">
         <div class="field">
-          <label>Your relationship to them</label>
-          <input type="text" placeholder="friend, sibling, coworker, ex...">
+          <label>Roast target's name</label>
+          <input type="text" name="target_name" placeholder="e.g. Dave from accounting" required>
         </div>
-        <div class="field">
-          <label>Occasion (optional)</label>
-          <input type="text" placeholder="birthday, breakup, just because">
-        </div>
-      </div>
-      <div class="field">
-        <label>Give us ammo</label>
-        <textarea placeholder="Job, hobbies, a running joke, a flaw they'd laugh at..."></textarea>
-      </div>
-      <div class="field">
-        <label>Spice level</label>
-        <div class="pill-group" id="spicePills">
-          <button type="button" class="pill">Mild</button>
-          <button type="button" class="pill active">Medium</button>
-          <button type="button" class="pill">Nuclear</button>
-        </div>
-      </div>
-      <div class="row2">
-        <div class="field">
-          <label>Your email</label>
-          <input type="text" placeholder="where we'll send your roast">
+        <div class="row2">
+          <div class="field">
+            <label>Your relationship to them</label>
+            <input type="text" name="relationship" placeholder="friend, sibling, coworker, ex...">
+          </div>
+          <div class="field">
+            <label>Occasion (optional)</label>
+            <input type="text" name="occasion" placeholder="birthday, breakup, just because">
+          </div>
         </div>
         <div class="field">
-          <label>Okay to feature on our site?</label>
-          <select>
-            <option>Yes, show my name</option>
-            <option>Yes, but keep me anonymous</option>
-            <option>No, email only</option>
-          </select>
+          <label>Give us ammo</label>
+          <textarea name="ammo" placeholder="Job, hobbies, a running joke, a flaw they'd laugh at..." required></textarea>
         </div>
-      </div>
-      <div class="field">
-        <label>Anything off-limits?</label>
-        <textarea placeholder="Let us know what to avoid — we roast habits, not people."></textarea>
-      </div>
-      <div class="submit-row">
-        <a href="#" class="cta">Submit Roast Order</a>
-        <p class="price-teaser">Roasts start at $4.99 · Emailed to you · No account needed</p>
-      </div>
+        <div class="field">
+          <label>Spice level</label>
+          <div class="pill-group" id="spicePills">
+            <button type="button" class="pill">Mild</button>
+            <button type="button" class="pill active">Medium</button>
+            <button type="button" class="pill">Nuclear</button>
+          </div>
+          <input type="hidden" name="spice_level" id="spiceLevelField" value="MEDIUM">
+        </div>
+        <div class="row2">
+          <div class="field">
+            <label>Your email</label>
+            <input type="email" name="customer_email" placeholder="where we'll send your roast" required>
+          </div>
+          <div class="field">
+            <label>Okay to feature on our site?</label>
+            <select name="feature_permission">
+              <option>Yes, show my name</option>
+              <option>Yes, but keep me anonymous</option>
+              <option>No, email only</option>
+            </select>
+          </div>
+        </div>
+        <div class="field">
+          <label>Anything off-limits?</label>
+          <textarea name="off_limits" placeholder="Let us know what to avoid — we roast habits, not people."></textarea>
+        </div>
+        <div class="submit-row">
+          <button type="submit" class="cta" style="border:none; cursor:pointer;">Submit Roast Order</button>
+          <p class="price-teaser">Roasts start at $4.99 · Emailed to you · No account needed</p>
+        </div>
+      </form>
     </div>
   </section>
 
@@ -383,6 +387,8 @@
     readout.textContent = levels[val];
     readout.style.color = colors[val];
     pills.forEach((p, i) => p.classList.toggle('active', i === val));
+    const spiceLevelField = document.getElementById('spiceLevelField');
+    if(spiceLevelField) spiceLevelField.value = levels[val];
   }
 
   slider.addEventListener('input', e => render(e.target.value));
