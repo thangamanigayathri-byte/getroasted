@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Roast Mail — Someone You Know Deserves a Roast</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Karla:ital,wght@0,400;0,500;0,700;1,400&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#EFDFBB;
+    --paper-dark:#E2CE9E;
+    --ink:#221A15;
+    --hot:#D8341C;
+    --mustard:#E8A33D;
+    --sage:#5C6E4F;
+    --line: rgba(34,26,21,0.18);
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--paper);
+    background-image:
+      radial-gradient(circle at 20% 10%, rgba(34,26,21,0.035) 0, transparent 40%),
+      radial-gradient(circle at 80% 60%, rgba(34,26,21,0.035) 0, transparent 45%);
+    color:var(--ink);
+    font-family:'Karla', sans-serif;
+    line-height:1.5;
+  }
+  .mono{font-family:'JetBrains Mono', monospace;}
+  .wrap{max-width:760px; margin:0 auto; padding:0 24px;}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position:relative;
+    padding:64px 24px 96px;
+    text-align:center;
+    overflow:hidden;
+    border-bottom:2px dashed var(--line);
+  }
+  .eyebrow{
+    display:inline-block;
+    font-family:'JetBrains Mono', monospace;
+    font-size:12px;
+    letter-spacing:.18em;
+    text-transform:uppercase;
+    color:var(--hot);
+    border:1px solid var(--hot);
+    padding:4px 10px;
+    border-radius:2px;
+    margin-bottom:28px;
+  }
+  .stamp{
+    display:inline-block;
+    transform:rotate(-4deg);
+    border:5px solid var(--hot);
+    color:var(--hot);
+    border-radius:8px;
+    padding:6px 18px;
+    font-family:'JetBrains Mono', monospace;
+    font-weight:600;
+    letter-spacing:.08em;
+    font-size:13px;
+    text-transform:uppercase;
+    margin-bottom:22px;
+    opacity:.9;
+  }
+  h1{
+    font-family:'Anton', sans-serif;
+    font-weight:400;
+    font-size:clamp(2.6rem, 8vw, 4.6rem);
+    line-height:0.98;
+    letter-spacing:.005em;
+    margin:0 0 20px;
+    text-wrap:balance;
+  }
+  h1 span{color:var(--hot);}
+  .sub{
+    font-size:1.15rem;
+    max-width:480px;
+    margin:0 auto 36px;
+    color:rgba(34,26,21,0.78);
+    font-style:italic;
+  }
+  .cta{
+    display:inline-block;
+    background:var(--ink);
+    color:var(--paper);
+    font-family:'JetBrains Mono', monospace;
+    text-transform:uppercase;
+    letter-spacing:.06em;
+    font-size:14px;
+    font-weight:600;
+    padding:16px 30px;
+    border-radius:3px;
+    text-decoration:none;
+    border:2px solid var(--ink);
+    transition:transform .12s ease, background .12s ease;
+  }
+  .cta:hover{ background:var(--hot); border-color:var(--hot); transform:translateY(-2px) rotate(-1deg); }
+
+  /* torn edge under hero */
+  .torn{
+    position:absolute; left:0; right:0; bottom:-1px; height:18px;
+    background:
+      linear-gradient(135deg, var(--paper) 50%, transparent 50%) 0 0/16px 18px,
+      linear-gradient(-135deg, var(--paper) 50%, transparent 50%) 0 0/16px 18px;
+    background-repeat:repeat-x;
+  }
+
+  section{ padding:56px 0; }
+  .section-title{
+    font-family:'Anton', sans-serif;
+    font-weight:400;
+    font-size:1.9rem;
+    margin:0 0 8px;
+  }
+  .section-kicker{
+    font-family:'JetBrains Mono', monospace;
+    font-size:12px;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--sage);
+    margin-bottom:6px;
+    display:block;
+  }
+
+  /* ---------- STEPS (ticket stubs) ---------- */
+  .steps{ display:grid; gap:16px; margin-top:28px; }
+  .stub{
+    display:grid;
+    grid-template-columns:56px 1fr;
+    gap:18px;
+    align-items:center;
+    background:var(--paper-dark);
+    border:1px dashed var(--line);
+    border-radius:4px;
+    padding:16px 20px;
+    position:relative;
+  }
+  .stub::before, .stub::after{
+    content:"";
+    position:absolute; top:50%; transform:translateY(-50%);
+    width:16px; height:16px; background:var(--paper); border-radius:50%;
+  }
+  .stub::before{ left:-8px; }
+  .stub::after{ right:-8px; }
+  .stub-num{
+    font-family:'Anton', sans-serif;
+    font-size:2.2rem;
+    color:var(--hot);
+    text-align:center;
+  }
+  .stub h3{ margin:0 0 4px; font-size:1.05rem; }
+  .stub p{ margin:0; color:rgba(34,26,21,0.75); font-size:.95rem; }
+
+  /* ---------- SPICE-O-METER (signature element) ---------- */
+  .spice-card{
+    background:var(--ink);
+    color:var(--paper);
+    border-radius:10px;
+    padding:32px 28px 28px;
+    margin-top:24px;
+  }
+  .spice-card .section-kicker{ color:var(--mustard); }
+  .spice-card h3{ font-family:'Anton', sans-serif; font-weight:400; font-size:1.6rem; margin:4px 0 22px; }
+  .flames{ display:flex; gap:8px; margin-bottom:18px; min-height:34px; align-items:flex-end;}
+  .flame{
+    width:14px; height:26px;
+    background:rgba(239,223,187,0.18);
+    border-radius:50% 50% 50% 50% / 60% 60% 40% 40%;
+    transition:background .18s ease, height .18s ease, box-shadow .18s ease;
+  }
+  input[type="range"]{
+    -webkit-appearance:none; width:100%; height:6px; border-radius:4px;
+    background:linear-gradient(90deg, var(--sage), var(--mustard), var(--hot));
+    outline:none; margin:8px 0 14px;
+  }
+  input[type="range"]::-webkit-slider-thumb{
+    -webkit-appearance:none; width:22px; height:22px; border-radius:50%;
+    background:var(--paper); border:3px solid var(--ink); cursor:pointer;
+  }
+  input[type="range"]::-moz-range-thumb{
+    width:22px; height:22px; border-radius:50%;
+    background:var(--paper); border:3px solid var(--ink); cursor:pointer;
+  }
+  .spice-labels{ display:flex; justify-content:space-between; font-family:'JetBrains Mono', monospace; font-size:11px; text-transform:uppercase; letter-spacing:.08em; opacity:.75; }
+  #spiceReadout{ color:var(--mustard); }
+
+  /* ---------- ORDER FORM (receipt style) ---------- */
+  .ticket{
+    background:var(--paper-dark);
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:32px 28px;
+    margin-top:24px;
+  }
+  .field{ margin-bottom:20px; }
+  label{
+    display:block;
+    font-family:'JetBrains Mono', monospace;
+    font-size:11px;
+    text-transform:uppercase;
+    letter-spacing:.08em;
+    margin-bottom:6px;
+    color:rgba(34,26,21,0.65);
+  }
+  input[type="text"], textarea, select{
+    width:100%;
+    font-family:'Karla', sans-serif;
+    font-size:15px;
+    padding:11px 12px;
+    border:1px solid var(--line);
+    border-radius:3px;
+    background:var(--paper);
+    color:var(--ink);
+  }
+  textarea{ resize:vertical; min-height:70px; }
+  .row2{ display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+  .pill-group{ display:flex; gap:8px; flex-wrap:wrap; }
+  .pill{
+    font-family:'JetBrains Mono', monospace;
+    font-size:12px;
+    text-transform:uppercase;
+    padding:8px 14px;
+    border-radius:20px;
+    border:1px solid var(--ink);
+    cursor:pointer;
+    background:transparent;
+  }
+  .pill.active{ background:var(--ink); color:var(--paper); }
+  .submit-row{ text-align:center; margin-top:8px; }
+  .price-teaser{ font-family:'JetBrains Mono', monospace; font-size:13px; color:var(--sage); margin-top:14px; text-align:center; }
+
+  /* ---------- TRUST FOOTER ---------- */
+  footer{
+    text-align:center;
+    padding:48px 24px 60px;
+    border-top:2px dashed var(--line);
+    font-size:.9rem;
+    color:rgba(34,26,21,0.7);
+  }
+  footer .mono{ font-size:11px; letter-spacing:.06em; display:block; margin-top:10px; opacity:.6; }
+
+  @media (max-width:560px){
+    .row2{ grid-template-columns:1fr; }
+    .stub{ grid-template-columns:44px 1fr; padding:14px; }
+    .stub-num{ font-size:1.6rem; }
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{ transition:none !important; }
+  }
+</style>
+</head>
+<body>
+
+  <section class="hero">
+    <div class="wrap">
+      <span class="eyebrow">Roast Mail · Est. This Year</span>
+      <div class="stamp">Reserved for Roasting</div>
+      <h1>Someone You Know<br>Deserves <span>a Roast.</span></h1>
+      <p class="sub">Personalized roasts, hand-written and hand-drawn, delivered straight to them. Because love is savage.</p>
+      <a href="#order" class="cta">Start My Roast →</a>
+    </div>
+    <div class="torn"></div>
+  </section>
+
+  <section class="wrap">
+    <span class="section-kicker">The Process</span>
+    <h2 class="section-title">How It Works</h2>
+    <div class="steps">
+      <div class="stub">
+        <div class="stub-num">1</div>
+        <div><h3>Tell us who they are</h3><p>Name, relationship, and a few facts we can use against them.</p></div>
+      </div>
+      <div class="stub">
+        <div class="stub-num">2</div>
+        <div><h3>Pick your spice level</h3><p>Mild, Medium, or Nuclear — you set the heat.</p></div>
+      </div>
+      <div class="stub">
+        <div class="stub-num">3</div>
+        <div><h3>We write it, draw it, send it</h3><p>Digital in 24 hours, or a mailed postcard in a few days.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap">
+    <div class="spice-card">
+      <span class="section-kicker">Set The Heat</span>
+      <h3>Spice-O-Meter</h3>
+      <div class="flames" id="flameRow"></div>
+      <input type="range" id="spiceSlider" min="0" max="2" step="1" value="1">
+      <div class="spice-labels">
+        <span>Mild</span><span>Medium</span><span>Nuclear</span>
+      </div>
+      <p class="mono" style="font-size:12px; margin-top:14px; opacity:.85;">Currently set to: <span id="spiceReadout">MEDIUM</span></p>
+    </div>
+  </section>
+
+  <section class="wrap" id="order">
+    <span class="section-kicker">The Order Ticket</span>
+    <h2 class="section-title">Fill It Out</h2>
+    <div class="ticket">
+      <div class="field">
+        <label>Roast target's name</label>
+        <input type="text" placeholder="e.g. Dave from accounting">
+      </div>
+      <div class="row2">
+        <div class="field">
+          <label>Your relationship to them</label>
+          <input type="text" placeholder="friend, sibling, coworker, ex...">
+        </div>
+        <div class="field">
+          <label>Occasion (optional)</label>
+          <input type="text" placeholder="birthday, breakup, just because">
+        </div>
+      </div>
+      <div class="field">
+        <label>Give us ammo</label>
+        <textarea placeholder="Job, hobbies, a running joke, a flaw they'd laugh at..."></textarea>
+      </div>
+      <div class="field">
+        <label>Spice level</label>
+        <div class="pill-group" id="spicePills">
+          <button type="button" class="pill">Mild</button>
+          <button type="button" class="pill active">Medium</button>
+          <button type="button" class="pill">Nuclear</button>
+        </div>
+      </div>
+      <div class="row2">
+        <div class="field">
+          <label>Delivery</label>
+          <select>
+            <option>Email (fast)</option>
+            <option>Mailed postcard (+cost)</option>
+            <option>Both</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Send anonymously?</label>
+          <select>
+            <option>No</option>
+            <option>Yes</option>
+          </select>
+        </div>
+      </div>
+      <div class="field">
+        <label>Anything off-limits?</label>
+        <textarea placeholder="Let us know what to avoid — we roast habits, not people."></textarea>
+      </div>
+      <div class="submit-row">
+        <a href="#" class="cta">Submit Roast Order</a>
+        <p class="price-teaser">Roasts start at $9 · No account needed</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    We roast habits, not people. Nothing about appearance, race, religion, or anything that'd actually hurt — just the good, dumb stuff friends tease each other about.
+    <span class="mono">ROAST MAIL — HANDLE WITH CARE — CONTENTS: SAVAGE</span>
+  </footer>
+
+<script>
+  const slider = document.getElementById('spiceSlider');
+  const flameRow = document.getElementById('flameRow');
+  const readout = document.getElementById('spiceReadout');
+  const pills = document.querySelectorAll('#spicePills .pill');
+  const levels = ['MILD','MEDIUM','NUCLEAR'];
+  const colors = ['#5C6E4F','#E8A33D','#D8341C'];
+  const flameCounts = [3,5,7];
+
+  function render(val){
+    val = parseInt(val);
+    flameRow.innerHTML = '';
+    const count = flameCounts[val];
+    for(let i=0;i<count;i++){
+      const f = document.createElement('div');
+      f.className = 'flame';
+      const h = 16 + (i % 3) * 6 + val*4;
+      f.style.height = h + 'px';
+      f.style.background = colors[val];
+      f.style.boxShadow = val === 2 ? `0 0 8px ${colors[val]}` : 'none';
+      flameRow.appendChild(f);
+    }
+    readout.textContent = levels[val];
+    readout.style.color = colors[val];
+    pills.forEach((p, i) => p.classList.toggle('active', i === val));
+  }
+
+  slider.addEventListener('input', e => render(e.target.value));
+  pills.forEach((p, i) => p.addEventListener('click', () => { slider.value = i; render(i); }));
+  render(slider.value);
+</script>
+
+</body>
+</html>
